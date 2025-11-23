@@ -18,6 +18,7 @@ class WelcomeWindow:
 
     def start_window(self):
         while True:
+            #Draw the title
             list(map(lambda line:
                      self.screen.addstr(self.line_title + self.snake_title.index(line),
                                         22, line),self.snake_title))
