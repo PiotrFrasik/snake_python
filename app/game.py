@@ -1,14 +1,11 @@
 import curses, time
 
 from core.board import BoardGame
+from core.start_window import WelcomeWindow
 
-#80x20
 class StartGame:
     def __init__(self):
         self.screen = curses.initscr()
-
-        #curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
-        #self.neon_green = curses.color_pair(1)
 
         self.board = BoardGame(self.screen)
 
@@ -16,11 +13,15 @@ class StartGame:
         curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
         neon_green = curses.color_pair(1)
 
-        self.board.draw(neon_green)
-        time.sleep(5)
+        start_window = WelcomeWindow(self.screen, neon_green)
 
-        stdscr.refresh()
-        stdscr.getch()
+        curses.curs_set(0) #remove mouse cursor
+
+        start_window.start_window()
+
+        self.board.draw(neon_green)
+
+        time.sleep(5)
 
 if __name__ == "__main__":
     curses.wrapper(StartGame().main)
