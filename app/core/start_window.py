@@ -17,7 +17,11 @@ class WelcomeWindow:
         self.screen.refresh()
 
     def start_window(self):
+        blink_timer = 0
+        self.screen.nodelay(True)
         while True:
+            self.screen.erase()
+
             #Draw the title
             list(map(lambda line:
                      self.screen.addstr(self.line_title + self.snake_title.index(line),
@@ -26,17 +30,23 @@ class WelcomeWindow:
             self.screen.attron(self.neon_green)
             self.screen.bkgd(self.neon_green)
             self.screen.border()
-            self.screen.addstr(14, 28,"PRESS ENTER TO START GAME",
-                          curses.A_BOLD | curses.A_BLINK)
+
+            blink_timer += 1
+            if blink_timer % 10 < 5:
+                self.screen.addstr(14, 28,"PRESS ENTER TO START GAME",
+                              curses.A_BOLD)
+            else: pass
 
             self.screen.attroff(self.neon_green)
             self.screen.refresh()
+            curses.napms(150)
 
             key = self.screen.getch()
 
             if key in [10, 13, curses.KEY_ENTER]:
                 self.screen.clear()
                 self.screen.refresh()
+                self.screen.nodelay(False)
                 break
 
 
