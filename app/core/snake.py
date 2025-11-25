@@ -1,12 +1,21 @@
-import curses
+import curses, random
 
 class Snake:
     def __init__(self, screen):
         self.screen = screen
-        self.x, self.y = [10,11,12,13],[10,10,10,10]
-        self.key = None
-        self.direction = curses.KEY_RIGHT
-        self.parts = [" "," "," "," "]
+        self.x, self.y, self.parts  = [], [], []
+        self.direction = None
+
+    def random_start(self):
+        list_key = [curses.KEY_RIGHT, curses.KEY_LEFT]
+        self.direction = list_key[random.randint(0, len(list_key)-1)] #first move
+
+        self.parts = list(" " * random.randint(3,5)) #snake length
+        #Generate x,y snake: x increments by 1, y remains the same
+        start_x = random.randint(30,50)
+        start_y = random.randint(7,13)
+        self.x, self.y = (list(range(start_x, start_x + len(self.parts)))
+                              ,[start_y]*len(self.parts))
 
     def move(self):
         #Downolad x,y head of snake
@@ -49,7 +58,7 @@ class Snake:
     def control_mechanism(self, neon_green, main_src, score_panel):
         main_src.nodelay(True)
         blink_timer = 0
-
+        self.random_start()
         while True:
             key = main_src.getch()
 
