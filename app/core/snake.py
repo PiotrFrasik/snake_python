@@ -65,4 +65,4 @@ class Snake:
             if self.direction in [curses.KEY_LEFT, curses.KEY_RIGHT]:
                 curses.napms(150)
             else:
-                curses.napms(250)
+                curses.napms(240)
