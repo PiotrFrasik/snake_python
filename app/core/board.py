@@ -1,6 +1,6 @@
 import curses, time
-from core.start_window import WelcomeWindow
-from core.snake import Snake
+from .start_window import WelcomeWindow
+from .snake import Snake
 
 
 class BoardGame:

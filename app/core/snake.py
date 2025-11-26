@@ -1,5 +1,5 @@
 import curses, random
-from core.game_over import GameOver
+from .game_over import GameOver
 
 class Snake:
     def __init__(self, screen):
