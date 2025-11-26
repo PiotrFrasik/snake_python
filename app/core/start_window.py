@@ -25,7 +25,7 @@ class WelcomeWindow:
             #Draw the title
             list(map(lambda line:
                      self.screen.addstr(self.line_title + self.snake_title.index(line),
-                                        22, line),self.snake_title))
+                                        22, line), self.snake_title))
 
             self.screen.attron(self.neon_green)
             self.screen.bkgd(self.neon_green)

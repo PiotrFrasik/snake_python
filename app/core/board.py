@@ -6,8 +6,8 @@ from core.snake import Snake
 class BoardGame:
     """Draw the board game window for snake and apples"""
     def __init__(self, screen):
-        self.cols = 80
-        self.rows = 20
+        self.rows = screen.getmaxyx()[0]
+        self.cols = screen.getmaxyx()[1]
 
         self.screen = screen
         self.upper_window = curses.newwin(3, self.cols, 0, 0)
@@ -42,7 +42,7 @@ class BoardGame:
         self.snake_window.refresh()
 
     def draw(self, neon_green):
-        self.snake.control_mechanism(neon_green, self.screen,self.score_panel)
+        self.snake.control_mechanism(neon_green, self.screen,self.score_panel, self)
 
 
 
