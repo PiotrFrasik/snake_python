@@ -8,15 +8,18 @@ class StartGame:
         self.screen = curses.initscr()
         self.board = BoardGame(self.screen)
 
+    def check_size_screen(self):
+        rows, cols = self.screen.getmaxyx()
+        # terminal size validation
+        if not (rows == 20 and cols == 80):
+            raise Exception("Terminal size must be exactly 20 and 80 (rows x cols).\n"
+                            f"Current size: {rows} x {cols}.")
+
     def main(self, stdscr):
         curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
         neon_green = curses.color_pair(1)
 
-        rows,cols = self.screen.getmaxyx()
-        #terminal size validation 
-        if not(rows == 20 and cols == 80):
-            raise Exception("Terminal size must be exactly 20 and 80 (rows x cols).\n"
-                            f"Current size: {rows} x {cols}.")
+        self.check_size_screen()
 
         start_window = WelcomeWindow(self.screen, neon_green)
 
