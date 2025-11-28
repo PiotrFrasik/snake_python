@@ -16,5 +16,3 @@ class Apples:
     def draw(self, neon_green):
         self.screen_snake.addstr(self.xy_apple[1], self.xy_apple[0],
                                  "ó", curses.A_BOLD | neon_green)
-
-

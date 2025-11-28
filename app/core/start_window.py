@@ -48,6 +48,3 @@ class WelcomeWindow:
                 self.screen.refresh()
                 self.screen.nodelay(False)
                 break
-
-
-

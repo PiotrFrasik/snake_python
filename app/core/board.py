@@ -1,5 +1,4 @@
-import curses, time
-from .start_window import WelcomeWindow
+import curses
 from .snake import Snake
 
 class BoardGame:

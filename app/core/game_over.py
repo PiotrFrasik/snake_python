@@ -35,6 +35,3 @@ class GameOver:
     def draw(self):
         self.draw_title()
         self.new_game()
-
-
-
