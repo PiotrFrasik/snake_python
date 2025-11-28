@@ -1,11 +1,14 @@
 import curses, random
 from .game_over import GameOver
+from .apples import Apples
 
 class Snake:
     def __init__(self, screen):
         self.screen = screen
         self.x, self.y, self.parts  = [], [], []
+        self.score = 0
         self.direction = curses.KEY_RIGHT
+        self.apples = Apples(self.screen)
 
     def random_start(self):
         list_key = [curses.KEY_RIGHT, curses.KEY_LEFT]
@@ -29,7 +32,10 @@ class Snake:
             return False
 
     def check_self_collision(self):
-        if self.x[0] in self.x[1:] and self.y[0] in self.y[1:]:
+        head = [self.x[0], self.y[0]]
+        part_body = list(zip(self.x[1:], self.y[1:]))
+
+        if head in part_body:
             return True
         else:
             return False
@@ -56,31 +62,43 @@ class Snake:
 
     def draw(self, neon_green, score_panel, blink_timer):
         self.screen.erase()
-
-        score_panel(neon_green, blink_timer)
         self.screen.attron(neon_green)
         self.screen.bkgd(neon_green)
         self.screen.border()
         #Draw the snake
-        try:
-            for index, element in enumerate(self.parts):
-                self.screen.addstr(self.y[index], self.x[index], element, curses.A_REVERSE)
-                curses.napms(10)
-        except curses.error:
-            pass
-
+        for index, element in enumerate(self.parts):
+            self.screen.addstr(self.y[index], self.x[index], element, curses.A_REVERSE)
         self.screen.attroff(neon_green)
+
+        #Draw apples in random place
+        if [self.x[0], self.y[0]] == self.apples.return_xy():
+            self.parts.append(" ")
+            self.x.append(self.x[-1])
+            self.y.append(self.y[-1])
+
+            self.score += 5
+            self.apples.random_generate()
+            self.apples.draw(neon_green)
+        else:
+            self.apples.draw(neon_green)
+
+        #Draw score panel
+        score_panel(neon_green, blink_timer, self.score)
+
         self.screen.refresh()
 
     def control_mechanism(self, neon_green, main_src, score_panel, draw_board):
         main_src.nodelay(True)
         blink_timer = 0
+        self.score = 0
+
         self.random_start()
+        self.apples.random_generate()
+
         while True:
 
             if self.check_wall_collision() or self.check_self_collision(): #init game_over
                 GameOver(self.screen, main_src, neon_green, draw_board).draw()
-                #raise Exception("End of game")
             else:
                 key = main_src.getch()
 
@@ -91,9 +109,9 @@ class Snake:
 
                 self.draw(neon_green, score_panel, blink_timer)
 
-                blink_timer += 1 #for blink line in board.score_panel
+                blink_timer += 1  #for blink line in board.score_panel
 
                 if self.direction in [curses.KEY_LEFT, curses.KEY_RIGHT]:
-                    curses.napms(150)
+                    curses.napms(100)
                 else:
-                    curses.napms(240)
+                    curses.napms(160)
