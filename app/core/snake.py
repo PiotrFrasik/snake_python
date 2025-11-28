@@ -122,8 +122,8 @@ class Snake:
                 self.draw(neon_green, score_panel, blink_timer)
 
                 blink_timer += 1  #for blink line in board.score_panel
-
+                #change speed
                 if self.direction in [curses.KEY_LEFT, curses.KEY_RIGHT]:
                     curses.napms(100)
                 else:
-                    curses.napms(150)
+                    curses.napms(160)

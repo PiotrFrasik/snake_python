@@ -12,7 +12,7 @@ class StartGame:
         rows, cols = self.screen.getmaxyx()
         # terminal size validation
         if not (rows == 17 and cols == 40):
-            raise Exception("Terminal size must be exactly 17 and 40 (rows x cols).\n"
+            raise Exception("Terminal size must be exactly 40 x 17 (rows x cols).\n"
                             f"Current size: {rows} x {cols}.")
 
     def main(self, stdscr):
