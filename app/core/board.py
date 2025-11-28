@@ -2,7 +2,6 @@ import curses, time
 from .start_window import WelcomeWindow
 from .snake import Snake
 
-
 class BoardGame:
     """Draw the board game window for snake and apples"""
     def __init__(self, screen):
@@ -16,19 +15,18 @@ class BoardGame:
 
         self.snake = Snake(self.snake_window)
 
-    def score_panel(self,neon_green, blink_timer):
+    def score_panel(self,neon_green, blink_timer, score):
         self.upper_window.erase()
 
         #Draw the score and apple count
         self.upper_window.attron(neon_green)
         self.upper_window.bkgd(neon_green)
-        self.upper_window.addstr(1, 1, f"SCORE: 0000", curses.A_BOLD)
+        self.upper_window.addstr(1, 1, f"SCORE {str(score).zfill(4)}", curses.A_BOLD)
 
         if blink_timer % 10 < 5: #Blink line
             self.upper_window.addstr(1, 35, "S N A K E", curses.A_BOLD)
         else: pass
 
-        #self.upper_window.addstr(1, self.cols - 4, f"ó00", curses.A_BOLD)
         self.upper_window.border()
         self.upper_window.attroff(neon_green)
         self.upper_window.refresh()
@@ -42,8 +40,4 @@ class BoardGame:
         self.snake_window.refresh()
 
     def draw(self, neon_green):
-        self.snake.control_mechanism(neon_green, self.screen,self.score_panel, self)
-
-
-
-
+        self.snake.control_mechanism(neon_green, self.screen, self.score_panel, self)
