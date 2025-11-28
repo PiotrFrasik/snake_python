@@ -13,13 +13,14 @@ class Snake:
 
     def random_start(self):
         list_key = [curses.KEY_RIGHT, curses.KEY_LEFT]
-        self.direction = list_key[random.randint(0, len(list_key) - 1)]  #first move
+        #first move
+        self.direction = list_key[random.randint(0, len(list_key) - 1)]
 
         self.parts = list(" " * random.randint(3,5)) #snake length
 
         #Generate x,y snake: x increments by 1, y remains the same
-        start_x = random.randint(30,50)
-        start_y = random.randint(7,13)
+        start_x = random.randint(10,30)
+        start_y = random.randint(3,10)
         self.x, self.y = (list(range(start_x, start_x + len(self.parts)))
                               ,[start_y]*len(self.parts))
 
@@ -77,7 +78,7 @@ class Snake:
             self.x.append(self.x[-1])
             self.y.append(self.y[-1])
 
-            self.score += 5
+            self.score += 3
             self.apples.random_generate()
             self.apples.draw(neon_green)
         else:
@@ -125,4 +126,4 @@ class Snake:
                 if self.direction in [curses.KEY_LEFT, curses.KEY_RIGHT]:
                     curses.napms(100)
                 else:
-                    curses.napms(160)
+                    curses.napms(150)

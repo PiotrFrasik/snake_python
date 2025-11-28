@@ -23,7 +23,7 @@ class BoardGame:
         self.upper_window.addstr(1, 1, f"SCORE {str(score).zfill(4)}", curses.A_BOLD)
 
         if blink_timer % 10 < 5: #Blink line
-            self.upper_window.addstr(1, 35, "S N A K E", curses.A_BOLD)
+            self.upper_window.addstr(1, 16, "S N A K E", curses.A_BOLD) #35
         else: pass
 
         self.upper_window.border()
