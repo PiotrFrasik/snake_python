@@ -7,7 +7,8 @@ class Snake:
         self.screen = screen
         self.x, self.y, self.parts  = [], [], []
         self.score = 0
-        self.direction = curses.KEY_RIGHT
+        self.direction = None
+        self.old_direction = None
         self.apples = Apples(self.screen)
 
     def random_start(self):
@@ -32,7 +33,7 @@ class Snake:
             return False
 
     def check_self_collision(self):
-        head = [self.x[0], self.y[0]]
+        head = (self.x[0], self.y[0])
         part_body = list(zip(self.x[1:], self.y[1:]))
 
         if head in part_body:
@@ -87,6 +88,15 @@ class Snake:
 
         self.screen.refresh()
 
+    def check_new_direction(self, key):
+        if (key == curses.KEY_LEFT and self.direction == curses.KEY_RIGHT) or \
+                (key == curses.KEY_RIGHT and self.direction == curses.KEY_LEFT) or \
+                (key == curses.KEY_UP and self.direction == curses.KEY_DOWN) or \
+                (key == curses.KEY_DOWN and self.direction == curses.KEY_UP):
+            pass
+        else:
+            self.direction = key
+
     def control_mechanism(self, neon_green, main_src, score_panel, draw_board):
         main_src.nodelay(True)
         blink_timer = 0
@@ -103,7 +113,8 @@ class Snake:
                 key = main_src.getch()
 
                 if key != -1:
-                    self.direction = key
+
+                    self.check_new_direction(key)
 
                 self.move()
 
