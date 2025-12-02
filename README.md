@@ -16,7 +16,13 @@ In the game, you control a snake moving across the board. Your objective is to c
 - Python 3.8+ 
 - System operacyjny: Linux, macOS
 ***
-# Instalcja
+
+# Gameplay
+
+![Gameplay](gif/gameplay.gif)
+
+***
+# Installation
 
 1. Clone the repository and move:
     ```bash
